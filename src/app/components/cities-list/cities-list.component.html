@@ -1,0 +1,79 @@
+<h1 class="font-bold mb-2 text-center">Cities List</h1>
+
+<div class="container">
+  <div class="mt-10 filters">
+    <div class="flex items-center ml-2">
+      <div>
+      <input [(ngModel)]="displayUnique" (change)="displayUniqueChange()" id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 ml-2 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+      <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Display Unique Cities</label>
+
+      <form style="width: 100%" [formGroup]="searchForm" (ngSubmit)="onSearchFormSubmit()">
+        <div class="mb-2 ml-2">
+          <label for="cityName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City Name</label>
+          <input type="text" formControlName="cityName" id="cityName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+        <div class="mb-2 ml-2">
+          <label for="countryName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country Name</label>
+          <input type="text" formControlName="countryName" id="countryName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        </div>
+        <div class="mb-2 mt-9 ml-2">
+          <button type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Search</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+<div class="mt-10 table">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <tr>
+      <th scope="col" style="width: 700px" class="px-6 py-3">
+        Country Name
+      </th>
+      <th scope="col" class="px-6 py-3">
+        City Name
+      </th>
+      <th scope="col" class="px-6 py-3">
+        City Logo
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Action
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (city of cities; track city.name) {
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ city.country.name }}
+          </th>
+          <td class="px-6 py-4">
+            {{ city.name }}
+          </td>
+          <td class="px-6 py-4">
+            <img src="{{city.logoUrl}}" class="mr-3 h-6 sm:h-9" alt="City Logo" />
+          </td>
+          <td class="px-6 py-4">
+            <button type="button" (click)="editCity(city)" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit</button>
+          </td>
+        </tr>
+        <app-city-edit *ngIf="selectedCity === city" [city]="selectedCity" (cityChanged)="cityUpdated($event)"></app-city-edit>
+      }
+    </tbody>
+  </table>
+  <div class="w-full flex justify-center mt-2">
+  <nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px text-sm">
+
+      <li *ngFor=" let item of [].constructor( totalPages ); let i = index">
+        @if ((i+1) == page) {
+          <div (click)="onPageChange(i)" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{{i + 1}}</div>
+        } @else {
+          <div (click)="onPageChange(i)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{i + 1}}</div>
+        }
+      </li>
+    </ul>
+  </nav>
+  </div>
+</div>
+</div>

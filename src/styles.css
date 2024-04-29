@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #000;
+}
+.inline-form {
+  display: flex;
+  align-items: center; /* Выравнивание элементов по центру по вертикали */
+}
+
+.inline-form input[type="text"] {
+  margin-right: 8px; /* Добавление небольшого отступа между полями ввода и кнопкой */
+}
+
+.inline-form button {
+  cursor: pointer; /* Стиль курсора в виде указателя при наведении на кнопку */
+}
+
+.container {
+  display: flex;
+}
+
+.filters {
+  flex: 1; /* Занимает 1 часть доступного пространства */
+  /* Ваши стили для блока фильтров */
+  padding-right: 20px; /* Отступ справа для разделения колонок */
+}
+
+.table {
+  flex: 3; /* Занимает 3 части доступного пространства */
+  /* Ваши стили для блока таблицы */
+}
+.hidden-div {
+  transform: translateY(-100%);
+  opacity: 0;
+  display: block; /* Или другой display, который вам нужен */
+}
